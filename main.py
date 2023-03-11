@@ -44,14 +44,45 @@ def plot_data(datalists):
     plt.show()
     plt.savefig("LineChartCovid19CasesAfricanRegions2020.pdf")
 
+def exp_regression(ydata, numdays, region):
+
+    # linearlize data by taking the log
+    take_log = lambda x: 0 if x == 0 else math.log10(x)
+    linear_y = list()
+    for i in ydata:
+        linear_y.append(take_log(i))
+    plt.scatter(numdays, ydata)
+
+    #regression
+    slope, intercept, r, p, std_err = stats.linregress(numdays, linear_y)
+    x = numpy.linspace(numdays[0], numdays[len(numdays)-1], 400)
+    y = 10**intercept * 10**(slope*x)
+    plt.plot(x, y, color="red")
+    plt.xlabel("Number of Days Since 5 March 2020")
+    plt.ylabel("Number of Cases")
+    plt.title("COVID-19 Cases in " + region + " in 2020")
+    plt.show()
+
+def poly_regression(ydata, numdays, region):
+    fit = numpy.poly1d(numpy.polyfit(numdays, ydata, 3))
+    x = numpy.linspace(numdays[0], numdays[len(numdays)-1], 300)
+    y = fit(x)
+    plt.scatter(numdays, ydata)
+    plt.plot(x, y, color="red")
+    plt.xlabel("Number of Days Since 5 March 2020")
+    plt.ylabel("Number of Cases")
+    plt.title("COVID-19 Cases in " + region + " in 2020")
+    plt.show()
+
+
 def main():
     file = "./archive/covid19za_provincial_cumulative_timeline_confirmed.csv"
     numdays, datalists = read_data(file)
-    plot_data(datalists)
+    #plot_data(datalists)
+    poly_regression(datalists["EC"], numdays, "EC")
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
-# 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
