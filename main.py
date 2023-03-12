@@ -75,6 +75,7 @@ def plot_data(datalists):
     plt.xlabel("Date")
     plt.ylabel("Number of Cases")
     #plt.show()
+    plt.clf()
     plt.savefig("./Charts/LineChartCovid19CasesAfricanRegions2020.pdf")
 
 
@@ -105,6 +106,7 @@ def exp_regression(ydata, numdays, region):
     plt.title("COVID-19 Cases in " + region + " in 2020")
     plt.savefig("./Charts/" + region + "_Covid19Cases2020ExpRegression.pdf")
     #plt.show()
+    plt.clf()
     return "y = 10^" + str(intercept) + " * 10^(" + str(slope) + "*x)"
 
 
@@ -129,6 +131,7 @@ def poly_regression(ydata, numdays, region):
     plt.ylabel("Number of Cases")
     plt.title("COVID-19 Cases in " + region + " in 2020")
     #plt.show()
+    plt.clf()
     plt.savefig("./Charts/" + region + "_Covid19Cases2020CubicRegression.pdf")
     return "y = " + get_fit_str(fit[3]) + " x^3 " + get_fit_str(fit[2]) + " x^2 " + get_fit_str(fit[1]) \
         + " x " + get_fit_str(fit[0])
